@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="head::head">
+<body>
+    
+    <head th:replace="navbar::navbar">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                        <li class="breadcrumb-item">Thông tin cá nhân</li>
+                    </ol>
+                </nav>
+                <div class="row prod__section">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Thông tin tài khoản</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Đánh giá</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                    
+                                    <img src="img/account.jpg"/>
+                                    
+                                    <div th:switch="${msg}"> 
+                                        <div th:case="name"><div class="alert alert-danger" >Tên không hợp lệ!</div></div>
+                                        <div th:case="longName"><div class="alert alert-danger" >Tên quá dài!</div></div>
+                                        <div th:case="dup"><div class="alert alert-danger" >CMT/CCCD đã đăng ký!</div></div>
+                                        <div th:case="cccd"><div class="alert alert-danger" >CMT/CCCD không hợp lệ!</div></div>
+                                        <div th:case="cccdWord"><div class="alert alert-danger" >CMT/CCCD không hợp lệ!</div></div>
+                                        <div th:case="pw_error"><div class="alert alert-danger" >Sai mật khẩu!</div></div>
+                                        <div th:case="success"><div class="alert alert-success" >Cập nhật tài khoản thành công!</div></div>
+                                        <p th:case="*"></p> 
+                                    </div>
+
+                                <form role="form" th:object="${account}" method="POST" class="login__form">
+                                    <fieldset>
+                                        <div class="form-group text-left">
+                                            <label for="mail">Tên đăng nhập (email):</label>
+                                            <input class="form-control" th:placeholder="${session.account.email}"  th:field="*{email}" type="text" required>
+                                        </div>
+                                        <div class="form-group text-left">
+                                            <label for="mail">Tên hiển thị:</label>
+                                            <input class="form-control" th:placeholder="${session.account.name}" th:field="*{name}"  type="text" required>
+                                        </div>
+                                        <div class="form-group text-left">
+                                            <label for="mail">Số CMT/CCCD:</label>
+                                            <input class="form-control" th:placeholder="${session.account.idcard}" th:field="*{idcard}"  type="text" required>
+                                        </div>
+                                        <div class="form-group text-left">
+                                            <label for="pass">Xác nhận Mật khẩu:</label>
+                                            <input class="form-control" placeholder="Mật khẩu" th:field="*{password}" name="pass" type="password" value="" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-warning" name="sbm">Cập nhật tài khoản<i class="fa fa-pencil"></i></button>
+                                    </fieldset>
+
+                                </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                
+                                <div class="row">
+                                    <div class="col-md-10 prod__section">
+                                        <h3>Đánh giá sản phẩm</h3>
+                                        <hr>
+
+                                        <div class="comment__card" th:each="cmt, i: ${cmtList}">
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <img th:src="'/img/' + ${session.account.avatar}" alt="User avatar" />
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <p th:text="${cmt.content}"></p>
+                                                    <p><i class="fa fa-reply"></i> <a th:href="'/product/' + ${prdCmt[i.index].id}" th:text="${prdCmt[i.index].name}"></a></p>
+                                                </div>
+                                                <hr style="width:30%;text-align:left;margin-left:0">
+                                            </div>
+                                        </div>
+                                        
+                                       
+                                    
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.col -->
+            
+        
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+
+    
+    <!--Footer -->
+    <div class="col-md-12 footer-box">
+
+    </div>
+    <!-- /.col -->
+    <div class="col-md-12 end-box text-center">
+        &copy; 2021 | &nbsp; All Rights Reserved | &nbsp; www.sharepinion.com | &nbsp; 24x7 support | &nbsp; Email us: sharepinion@gmail.com
+    </div>
+    <!--Footer end -->
+    
+    <!--Core JavaScript file  -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <!--bootstrap JavaScript file  -->
+    <script src="js/bs/bootstrap.js"></script>
+    <!--Slider JavaScript file  -->
+    <script src="ItemSlider/js/modernizr.custom.63321.js"></script>
+    <script src="ItemSlider/js/jquery.catslider.js"></script>
+    <script>
+        $(function () {
+
+            $('#mi-slider').catslider();
+
+        });
+		</script>
+</body>
+</html>

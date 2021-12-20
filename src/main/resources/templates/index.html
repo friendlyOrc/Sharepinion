@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="head::head">
+</head>
+
+<body>
+
+    <nav th:replace="navbar::navbar">
+    </nav>
+
+    <div class="slider_container">
+
+        <!-- Panels -->
+        <div class="swipe">
+            <div class="panel" data-img="img/slider_2.jpg">
+            
+            </div>
+            <div class="panel" data-img="img/slider_1.jpg">
+            </div>
+            <div class="panel" data-img="img/slider_3.jpg">
+            </div>
+            <div class="panel" data-img="img/slider_4.jpg">
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="info">
+            <div class="inner">
+            <h3>Hãy để lại đánh giá của bạn!</h3>
+            <p>Chúng tôi quan tâm đến cảm nhận của bạn về sản phẩm!</p>
+            </div>
+            <div class="buttons">
+            <button class="btn-prev" disabled>&larr;</button>
+            <button class="btn-next">&rarr;</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    
+    <div class="container">
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-md-3">
+                <div>
+                    <a href="#" class="list-group-item active">Đồ điện tử
+                    </a>
+                    <ul class="list-group">
+
+                        <li class="list-group-item">Điện thoại
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+                        <li class="list-group-item">Máy tính
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+                        <li class="list-group-item">Máy tính bảng
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+                        <li class="list-group-item">Giải trí
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.div -->
+                <div>
+                    <a href="#" class="list-group-item active bg-success">Quần áo
+                    </a>
+                    <ul class="list-group">
+
+                        <li class="list-group-item">Đồ nam
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+                        <li class="list-group-item">Đồ nữ
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+                        <li class="list-group-item">Trẻ em
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /.div -->
+                <div>
+                    <a href="#" class="list-group-item active">Phụ kiện
+                    </a>
+                    <ul class="list-group">
+                        <li class="list-group-item">Điện thoại
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+                        <li class="list-group-item">Phụ kiện nam
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+                        <li class="list-group-item">Phụ kiện nữ
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+                        <li class="list-group-item">Nội thất
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+                        <li class="list-group-item">Nhà bếp
+                            <span class="badge badge-pill badge-success pull-right">234</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.div -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+
+                <div class="home__prd__list">
+                    
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="card-columns">
+
+
+                            <div th:each="prd, i: ${prdList}" >
+                                <div class="card" th:onclick="'window.location.href=\'/product/' + ${ + prd.id} + '\''" >
+                                    <img class="card-img-top" th:src="'img/' + ${prd.images[0].name}" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title" th:text="${prd.name}"></h5>
+                                        <span class="badge badge-warning" th:text="${#numbers.formatDecimal(prd.price, 0, 'COMMA', 2, 'POINT')}"></span>
+                                    </div>
+                                    <div class="card-footer" th:switch="${cmtList[i.index]}">
+                                        <small class="text-muted" th:case="0">Chưa có đánh giá</small>
+                                        <small class="text-muted" th:case="*">Số lượng đánh giá: <span th:text="${cmtList[i.index]}"></span> </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" onclick="window.location.href='product.html'">
+                                <img class="card-img-top" src="img/prd_2.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nồi chiên không dầu Phillips</h5>
+                                    <span class="badge badge-warning">₫1.400.000</span>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Lần cuối đánh giá: 21:30 Sun 03</small>
+                                </div>
+                            </div>
+                            
+                            <div class="card" onclick="window.location.href='product.html'">
+                                <img class="card-img-top" src="img/prd_3.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">LEGO Friends Coffee House</h5>
+                                    <span class="badge badge-warning">₫1.400.000</span>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Lần cuối đánh giá: 21:30 Sun 03</small>
+                                </div>
+                            </div>
+
+                            <div class="card bg-primary text-white text-center p-3">
+                                <blockquote class="blockquote mb-0">
+                                <p>So với việc chi trả cho một bác sĩ tâm lý thì mua sắm ít tốn kém hơn.</p>
+                                <footer class="blockquote-footer">
+                                    <small class="text-white">
+                                    Ca sĩ Tammy Faye Bakker
+                                    </small>
+                                </footer>
+                                </blockquote>
+                            </div>
+
+                            <div class="card" onclick="window.location.href='product.html'">
+                                <img class="card-img-top" src="img/prd_4.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">Vivo Book</h5>
+                                    <span class="badge badge-warning">₫1.400.000</span>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Lần cuối đánh giá: 21:30 Sun 03</small>
+                                </div>
+                            </div>
+                            <div class="card" onclick="window.location.href='product.html'">
+                                <img class="card-img-top" src="img/prd_5.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">LEGO Batman 70905</h5>
+                                    <span class="badge badge-warning">₫1.400.000</span>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Lần cuối đánh giá: 21:30 Sun 03</small>
+                                </div>
+                            </div>
+                            <div class="card" onclick="window.location.href='product.html'">
+                                <img class="card-img-top" src="img/prd_6.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">Màn hình ASUS ProArt</h5>
+                                    <span class="badge badge-warning">₫1.400.000</span>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Lần cuối đánh giá: 21:30 Sun 03</small>
+                                </div>
+                            </div>
+                            <div class="card" onclick="window.location.href='product.html'">
+                                <img class="card-img-top" src="img/prd_7.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">Chuột LogiTech G107</h5>
+                                    <span class="badge badge-warning">₫1.400.000</span>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Lần cuối đánh giá: 21:30 Sun 03</small>
+                                </div>
+                            </div>
+
+                            <div class="card p-3">
+                                <blockquote class="blockquote mb-0 card-body">
+                                <p>Mặc đẹp không phải là đề cao bản thân, mặc đẹp là tôn trọng bản thân.</p>
+                                <footer class="blockquote-footer">
+                                    <small class="text-muted">
+                                     Charles Hix
+                                    </small>
+                                </footer>
+                                </blockquote>
+                            </div>
+
+                            <div class="card" onclick="window.location.href='product.html'">
+                                <img class="card-img-top" src="img/prd_8.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">Bàn Phím cơ X010</h5>
+                                    <span class="badge badge-warning">₫1.400.000</span>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Lần cuối đánh giá: 21:30 Sun 03</small>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+
+    <div class="col-md-12 end-box text-center">
+        &copy; 2021 | &nbsp; All Rights Reserved | &nbsp; www.sharepinion.com | &nbsp; 24x7 support | &nbsp; Email us: sharepinion@gmail.com
+    </div>
+
+    <!-- /.col -->
+    <!--Footer end -->
+    <!--Core JavaScript file  -->
+    <script src="js/jquery-1.10.2.js"></script>
+    
+    <!--bootstrap JavaScript file  -->
+    <script src="js/bootstrap.js"></script>
+    <!--Slider JavaScript file  -->
+    <script src="ItemSlider/js/modernizr.custom.63321.js"></script>
+    <script src="ItemSlider/js/jquery.catslider.js"></script>
+    <script>
+        $(function () {
+
+            $('#mi-slider').catslider();
+
+        });
+            $(document).ready(function(){
+
+        //Swipe speed:
+        var tolerance = 100; //px.
+        var speed = 650; //ms.
+
+        //Elements:
+        var interactiveElements = $('input, button, a');
+        var itemsLength = $('.panel').length;
+        var active = 1;
+
+        //Background images:
+        for (i=1; i<=itemsLength; i++){
+            var $layer = $(".panel:nth-child("+i+")");
+            var bgImg = $layer.attr("data-img");
+            $layer.css({
+            "background": "url("+bgImg+") no-repeat center / cover"
+            });
+        };
+
+        //Transitions:
+        setTimeout(function() {
+            $(".panel").css({
+            "transition": "cubic-bezier(.4,.95,.5,1.5) "+speed+"ms"
+            });
+        }, 200);
+
+        //Presets:
+        $(".panel:not(:first)").addClass("right");
+
+        //Swipe:
+        function swipeScreen() {
+            $('.swipe').on('mousedown touchstart', function(e) {
+
+            var touch = e.originalEvent.touches;
+            var start = touch ? touch[0].pageX : e.pageX;
+            var difference;
+
+            $(this).on('mousemove touchmove', function(e) {
+                var contact = e.originalEvent.touches,
+                end = contact ? contact[0].pageX : e.pageX;
+                difference = end-start;
+            });
+
+            //On touch end:
+            $(window).one('mouseup touchend', function(e) {
+                e.preventDefault();
+
+                //Swipe right:
+                if (active < itemsLength && difference < -tolerance) {
+                $(".panel:nth-child("+active+")").addClass("left");
+                $(".panel:nth-child("+(active+1)+")").removeClass("right");
+                active += 1;
+                btnDisable();
+                };
+
+                // Swipe left:
+                if (active > 1 && difference > tolerance) {
+                $(".panel:nth-child("+(active-1)+")").removeClass("left");
+                $(".panel:nth-child("+active+")").addClass("right");
+                active -= 1;
+                btnDisable();
+                };
+
+                $('.swipe').off('mousemove touchmove');
+            });
+
+            });
+        };
+        swipeScreen();
+
+        //Prevent swipe on interactive elements:
+        interactiveElements.on('touchstart touchend touchup', function(e) {
+            e.stopPropagation();
+        });
+
+        //Buttons:
+        $(".btn-prev").click(function(){
+            // Swipe left:
+            if (active > 1) {
+            $(".panel:nth-child("+(active-1)+")").removeClass("left");
+            $(".panel:nth-child("+active+")").addClass("right");
+            active -= 1;
+            btnDisable();
+            };
+        });
+
+        $(".btn-next").click(function(){
+            //Swipe right:
+            if (active < itemsLength) {
+            $(".panel:nth-child("+active+")").addClass("left");
+            $(".panel:nth-child("+(active+1)+")").removeClass("right");
+            active += 1;
+            btnDisable();
+            };
+        });
+
+        function btnDisable() {
+            if (active >= itemsLength) {
+            $(".btn-next").prop("disabled", true);
+            $(".btn-prev").prop("disabled", false);
+            }
+            else if (active <= 1) {
+            $(".btn-prev").prop("disabled", true);
+            $(".btn-next").prop("disabled", false);
+            }
+            else {
+            $(".btn-prev, .btn-next").prop("disabled", false);
+            };
+        };
+
+        });
+    </script>
+</body>
+</html>

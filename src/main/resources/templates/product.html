@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="head::head">
+</head>
+
+<body>
+
+    <nav th:replace="navbar::navbar">
+    </nav>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="#">Library</a></li>
+                        <li class="breadcrumb-item active" aria-current="page" th:text="${prd.name}"></li>
+                    </ol>
+                </nav>
+                <div class="row prod__section">
+                    <div class="col-md-6">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li  th:each="img, i: ${prd.images}" data-target="#carouselExampleIndicators" th:data-slide-to="${i.index}" th:class="${i.index == 0 ? 'active' : ''}"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div th:class="${i.index == 0 ? 'carousel-item  active' : 'carousel-item '}" th:each="img, i: ${prd.images}">
+                                    <img th:src="'/img/' + ${img.name}" alt="" />
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 th:text="${prd.name}"></h2>
+                        <!-- 
+                        <p><i><i class="fa fa-comment"></i> Đánh giá tương đối tích cực</i> </p>
+                        -->
+                        <span class="badge badge-warning prd__price__label" th:text="'₫' + ${#numbers.formatDecimal(prd.price, 0, 'COMMA', 2, 'POINT')}"></span>
+
+                        <hr>
+                        <p><i class="fa fa-trophy"></i> Đặc tính nổi bật được đánh giá</p>
+
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">
+                                    <i class="fa fa-thumbs-o-up"></i> <span th:text="${cmtPos.size()}"></span> đánh giá tích cực
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
+                                    <i class="fa fa-thumbs-o-down"></i> <span th:text="${cmtNeg.size()}"></span> đánh giá tiêu cực
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrPos}">
+                                                <span th:text="${attr.content}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="prod__attr" th:each="attr: ${attrNeg}">
+                                            <span th:text="${attr.content}"></span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                        <p><i class="fa fa-info"></i> Chi tiết sản phẩm</p>
+                        <table class="table">
+                            <tbody>
+                                <!--
+                                <tr>
+                                    <td>Hãng</td>
+                                    <td>Apple</td>
+                                </tr>
+                                -->
+                                <tr>
+                                    <td>Loại hàng</td>
+                                    <td th:text="${prd.subCategory.name}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <button type="button" class="btn btn-outline-info" onclick="openCompare()"><i class="fa fa-exchange"></i> So sánh với sản phẩm khác</button>
+                    </div>
+                </div>
+                <style>
+                    .prd__select__panel{
+                        /* display: block !important;
+                        position: absolute !important;
+                        top: 0;
+                        height: 90vw; */
+                        overflow: scroll;
+                        z-index: 9999;
+                        /* max-height: 20vw; */
+                        background-color: #fff;
+                        padding: 1.5vw 1vw;
+                        border-radius: 0.5vw;
+                        width: 100%;
+                        overflow-y: hidden;
+                        margin: 0 auto;
+                    }
+                    .prd__select__panel .card{
+                        min-width: 12vw;
+                        max-width: 12vw;
+                        margin: 1vw 0.5vw;
+                    }
+                    .prd__select__panel input{
+                        min-width: 10vw;
+                        width: 20vw;
+                    }
+                    .hidden{
+                        display: none !important;
+                    }
+                    .no__result p {
+                        display: block;
+                        margin: 0 auto;
+                        margin-top: 0.5vw;
+                    }
+                </style>
+                <div class="row prd__select__panel hidden">
+                    <div class="col-md-10 prod__section">
+                        <div class="text-center">
+                            <input class="form-control mr-sm-2" id="compareSearch" type="search" placeholder="Tên sản phẩm" onkeyup="searchItem()">
+                        </div>
+    
+                        <div class="d-flex flex-row">
+    
+                            <div class="card comparePrd" th:each="otherprd, i: ${sameCate}" >
+                                <img class="card-img-top" th:src="'/img/' + ${otherprd.images[0].name}" alt="" />
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${otherprd.name}"></h5>
+                                    <button type="button" class="btn btn-outline-info" th:onclick="'window.location.href=\'/compare/' + ${ + prd.id} + '/' + ${ + otherprd.id} + '\''"><i class="fa fa-info-circle"></i> Chi tiết</button>
+                                </div>
+                            </div>
+    
+                            <div class="card comparePrd" th:each="otherprd, i: ${sameCate}" >
+                                <img class="card-img-top" th:src="'/img/' + ${otherprd.images[0].name}" alt="" />
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${otherprd.name}"></h5>
+                                    <button type="button" class="btn btn-outline-info" th:onclick="'window.location.href=\'/compare/' + ${ + prd.id} + '/' + ${ + otherprd.id} + '\''"><i class="fa fa-info-circle"></i> Chi tiết</button>
+                                </div>
+                            </div>
+    
+                            <div class="card comparePrd" th:each="otherprd, i: ${sameCate}" >
+                                <img class="card-img-top" th:src="'/img/' + ${otherprd.images[0].name}" alt="" />
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${otherprd.name}"></h5>
+                                    <button type="button" class="btn btn-outline-info" th:onclick="'window.location.href=\'/compare/' + ${ + prd.id} + '/' + ${ + otherprd.id} + '\''"><i class="fa fa-info-circle"></i> Chi tiết</button>
+                                </div>
+                            </div>
+    
+                            <div class="card comparePrd" th:each="otherprd, i: ${sameCate}" >
+                                <img class="card-img-top" th:src="'/img/' + ${otherprd.images[0].name}" alt="" />
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${otherprd.name}"></h5>
+                                    <button type="button" class="btn btn-outline-info" th:onclick="'window.location.href=\'/compare/' + ${ + prd.id} + '/' + ${ + otherprd.id} + '\''"><i class="fa fa-info-circle"></i> Chi tiết</button>
+                                </div>
+                            </div>
+                        
+                            <div class="no__result hidden">
+                                <p>Không có kết quả!</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row prod__second__section">
+                    <div class="col-md-10 prod__section">
+                        <h3>Mô tả sản phẩm</h3>
+                        <p th:text="${prd.des}" style="white-space: pre-line"></p>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <div class="card" th:onclick="'window.location.href=\'/product/' + ${ + prd.id} + '\''"  th:each="prd: ${sameCate}">
+                            <img class="card-img-top" th:src="'/img/' + ${prd.images[0].name}" alt="" />
+                            <div class="card-body">
+                                <h5 class="card-title"  th:text="${prd.name}"></h5>
+                                <span class="badge badge-warning" th:text="'₫' + ${#numbers.formatDecimal(prd.price, 0, 'COMMA', 2, 'POINT')}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 prod__section">
+                        <h3>Đánh giá sản phẩm</h3>
+                        <hr>
+                        <div class="comment__card" th:each="cmt: ${cmtList}">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <img th:src="'/img/' + ${cmt.account.avatar}" alt="User avatar" />
+                                </div>
+                                <div class="col-md-11">
+                                    <span class="badge badge-info" th:text="${cmt.account.name}"></span> <span th:text="${cmt.cmtdate}"></span> <span th:text="${cmt.cmttime}"></span>
+                                    <p th:text="${cmt.content}">Sản phẩm tuyệt vời!</p>
+                                </div>
+                                <hr style="width:30%;text-align:left;margin-left:0">
+                            </div>
+                        </div>
+                        
+
+                        <div th:switch="${session.account}">
+
+                            <div th:case="null" class="border border-warning text-center login__required__popup">
+                                Vui lòng đăng nhập để đăng bình luận!
+                                <br>
+                                <a href="/login" class="badge badge-primary">Đăng nhập</a>
+                            </div>
+
+                            <div th:case="*" class="comment__card comment__card__self">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <img th:src="'/img/' + ${session.account.avatar}" alt="User avatar" />
+                                    </div>
+                                    <div class="col-md-11">
+                                        <span class="badge badge-warning" th:text="${session.account.name}"></span>
+                                        <form role="form" th:object="${comment}" method="POST" class="">
+                                            <fieldset>
+                                                <div class="form-group text-left">
+                                                    <textarea class="form-control" placeholder="Đánh giá của bạn" name="content" th:field="*{content}" type="text" required></textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" name="sbm">Gửi</button>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                    <hr style="width:30%;text-align:left;margin-left:0">
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        
+
+                        
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <!-- /.col -->
+            
+        
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+
+    
+    <!--Footer -->
+    <div class="col-md-12 footer-box">
+
+    </div>
+    <!-- /.col -->
+    <div class="col-md-12 end-box text-center">
+        &copy; 2021 | &nbsp; All Rights Reserved | &nbsp; www.sharepinion.com | &nbsp; 24x7 support | &nbsp; Email us: sharepinion@gmail.com
+    </div>
+    <!--Footer end -->
+    
+    <!--Core JavaScript file  -->
+    <script src="/js/jquery-1.10.2.js"></script>
+    <!--bootstrap JavaScript file  -->
+    <script src="/js/bs/bootstrap.js"></script>
+    <!--Slider JavaScript file  -->
+    <script src="/ItemSlider/js/modernizr.custom.63321.js"></script>
+    <script src="/ItemSlider/js/jquery.catslider.js"></script>
+    <script>
+        $(function () {
+
+            $('#mi-slider').catslider();
+
+        });
+
+        function openCompare(){
+            $('.prd__select__panel').toggleClass('hidden');
+        }
+
+        function searchItem(){
+            let search = document.getElementById('compareSearch');
+            let name = search.value.toLowerCase();
+
+            let items = document.getElementsByClassName('comparePrd');
+            let itemNum = items.length;
+
+            for(let i = 0; i < items.length; i++){
+                let text = document.getElementsByClassName('comparePrd')[i].getElementsByClassName('card-title')[0].textContent.toLowerCase();
+                if(text.includes(name)){
+                    items[i].classList.remove('hidden');
+                }else{
+                    items[i].classList.add('hidden');
+                }
+            }
+            let hid = document.getElementsByClassName('comparePrd hidden').length;
+
+            if(hid == itemNum){
+                $('.no__result').removeClass('hidden');
+            }else{
+                $('.no__result').addClass('hidden');
+            }
+        }
+		</script>
+</body>
+</html>

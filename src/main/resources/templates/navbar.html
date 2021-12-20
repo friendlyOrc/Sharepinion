@@ -1,0 +1,31 @@
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark position-sticky" th:fragment="navbar">
+    <a class="navbar-brand" href="/"><b>SHARE</b>PINION</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Trang chủ <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="">Sản phẩm</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0 pull-right">
+            <input class="form-control mr-sm-2" type="search" placeholder="Tên sản phẩm, hãng,...">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+        <div th:if="${session.account}" class="d-flex">
+            <a href="/profile" class="nav-link" ><i class="fa fa-user"></i> <span th:text="${session.account.name}"></span> </a>
+            <a href="/logout" class="nav-link"><i class="fa fa-sign-out"></i></a>
+        </div>
+        <div th:unless="${session.account}" class="d-flex">
+            <a class="nav-link" href="/login">Đăng nhập</a>
+            <a class="nav-link" href="/signup">Đăng ký</a>
+        </div>
+    </div>
+</nav> 

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="head::head">
+    
+<body>
+
+    <div class="row justify-content-center">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="text-center">
+                    <div class="panel-heading"><h1><b>SHARE</b>PINION</div>
+
+                    <h3>Tạo tài khoản</h3>
+                </div>
+                <div class="panel-body">
+                    <div th:switch="${msg}"> 
+                        <div th:case="username"><div class="alert alert-danger" >Tài khoản đã tồn tại!</div></div>
+                        <div th:case="dup"><div class="alert alert-danger" >CMT/CCCD đã đăng ký!</div></div>
+                        <div th:case="cccd"><div class="alert alert-danger" >CMT/CCCD không hợp lệ!</div></div>
+                        <div th:case="cccdWord"><div class="alert alert-danger" >CMT/CCCD không hợp lệ!</div></div>
+                        <div th:case="dupEmail"><div class="alert alert-danger" >Email đã đăng ký!</div></div>
+                        <div th:case="speUsername"><div class="alert alert-danger" >Tên đăng nhập không được chứa ký tự đặc biệt!</div></div>
+                        <p th:case="*"></p> 
+                      </div>
+                    
+                        <form role="form" th:object="${account}" method="POST" class="login__form text-center">
+                            <fieldset>
+                                <div class="form-group text-left">
+                                    <label for="mail">Tên đăng nhập (email):</label>
+                                    <input class="form-control" placeholder="Tên đăng nhập" name="mail" th:field="*{email}" type="email" autofocus required>
+                                </div>
+                                <div class="form-group text-left">
+                                    <label for="mail">Tên hiển thị:</label>
+                                    <input class="form-control" placeholder="Tên hiển thị" name="text" th:field="*{name}" type="text" autofocus required>
+                                </div>
+                                <div class="form-group text-left">
+                                    <label for="mail">Số CMT/CCCD</label>
+                                    <input class="form-control" placeholder="Số CMT/CCCD" name="text" th:field="*{idcard}" type="text" autofocus required>
+                                </div>
+                                <div class="form-group text-left">
+                                    <label for="pass">Mật khẩu:</label>
+                                    <input class="form-control" placeholder="Mật khẩu" th:field="*{password}" name="pass" type="password" value="" required id="password">
+                                </div>
+                                <div class="form-group text-left">
+                                    <label for="pass">Nhập lại mật khẩu:</label>
+                                    <input class="form-control" placeholder="Nhập lại mật khẩu" name="repass" type="password" value="" required id="confirm_password">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" name="sbm" id="sbm" disabled>Tạo tài khoản</button>
+
+                            </fieldset>
+                        </form>
+                </div> 
+            </div>
+        </div>
+
+    </div>
+    <script src="js/jquery-1.10.2.js"></script>
+    
+    <!--bootstrap JavaScript file  -->
+    <script src="js/bootstrap.js"></script>
+    <script>
+        $('#password, #confirm_password').on('keyup', function () {
+            if ($('#password').val() == $('#confirm_password').val()) {
+                $('#sbm').prop('disabled', false);
+            } else 
+                $('#sbm').prop('disabled', true);
+        });
+    </script>
+</body>
+
+</html>

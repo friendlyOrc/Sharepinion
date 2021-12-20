@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="head::head">
+</head>
+
+<body>
+
+    <nav th:replace="navbar::navbar">
+    </nav>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="#">Library</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">So sánh <span th:text="${prd1.name}"></span> & <span th:text="${prd2.name}"></span></li>
+                    </ol>
+                </nav>
+                <div class="row prod__section">
+                    <div class="col-md-6">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li  th:each="img, i: ${prd1.images}" data-target="#carouselExampleIndicators" th:data-slide-to="${i.index}" th:class="${i.index == 0 ? 'active' : ''}"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div th:class="${i.index == 0 ? 'carousel-item  active' : 'carousel-item '}" th:each="img, i: ${prd1.images}">
+                                    <img th:src="'/img/' + ${img.name}" alt="" />
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                    <style>
+                        .carousel {
+                            height: 100%;
+                            min-height: 30vw;
+                        }
+
+                        .carousel img {
+                            width: 100%;
+                            max-height: 30vw;
+                        }
+                    </style>
+                    <div class="col-md-6">
+                        <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li  th:each="img, i: ${prd2.images}" data-target="#carouselExampleIndicators2" th:data-slide-to="${i.index}" th:class="${i.index == 0 ? 'active' : ''}"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div th:class="${i.index == 0 ? 'carousel-item  active' : 'carousel-item '}" th:each="img, i: ${prd2.images}">
+                                    <img th:src="'/img/' + ${img.name}" alt="" />
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row prod__second__section">
+                    <div class="col-md-6 text-center">
+                        <h2 th:text="${prd1.name}"></h2> 
+                        <!-- 
+                        <p><i><i class="fa fa-comment"></i> Đánh giá tương đối tích cực</i> </p>
+                        -->
+                        <p class="badge badge-warning prd__price__label" th:text="'₫' + ${#numbers.formatDecimal(prd1.price, 0, 'COMMA', 2, 'POINT')}"></p>
+                        <button type="button" class="btn btn-outline-info" th:onclick="'window.location.href=\'/product/' + ${ + prd1.id} + '\''">Xem chi tiết</button>
+                        <hr>
+                        <p class="text-center"><i class="fa fa-trophy"></i> Đặc tính nổi bật được đánh giá</p>
+                    </div>
+                    
+                    <div class="col-md-6 text-center">
+                        <h2 th:text="${prd2.name}"></h2> 
+                        <!-- 
+                        <p><i><i class="fa fa-comment"></i> Đánh giá tương đối tích cực</i> </p>
+                        -->
+                        <span class="badge badge-warning prd__price__label" th:text="'₫' + ${#numbers.formatDecimal(prd2.price, 0, 'COMMA', 2, 'POINT')}"></span>
+                        <button type="button" class="btn btn-outline-info" th:onclick="'window.location.href=\'/product/' + ${ + prd2.id} + '\''">Xem chi tiết</button>
+                        <hr>
+                        <p class="text-center"><i class="fa fa-trophy"></i> Đặc tính nổi bật được đánh giá</p>
+
+                    </div>
+
+                    
+                <style>
+                    .table th{
+                        max-width: 10vw !important;
+                    }
+                    .table .prod__attr__container{
+                        width: 20vw !important;
+                        padding: 0 !important;
+                    }
+                    .table .prod__attr{
+                        margin: 0.2vw !important;
+                    }
+                </style>
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <tbody>
+
+                                <tr>
+                                    <th colspan="4" class="text-center table-info">Màn hình</th>
+                                </tr>
+                                <!-- TABLE OF COMPARE -->
+                                <tr>
+                                    <th colspan="2" class="text-center table-secondary">
+                                        <span th:text="${attrScreenPos1.size}"></span>/<span th:text="${attrScreenPos1.size + attrScreenNeg1.size}"></span> thuộc tính tích cực
+                                    </th>
+                                    <th colspan="2" class="text-center table-secondary">
+                                        <span th:text="${attrScreenPos2.size}"></span>/<span th:text="${attrScreenPos2.size + attrScreenNeg2.size}"></span> thuộc tính tích cực
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrScreenPos1}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrScreenNeg1}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrScreenPos2}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrScreenNeg2}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <!-- END OF TABLE OF COMPARE -->
+                                
+                                <tr>
+                                    <th colspan="4" class="text-center table-info">Độ bền</th>
+                                </tr>
+                                
+                                <!-- TABLE OF COMPARE -->
+                                <tr>
+                                    <th colspan="2" class="text-center table-secondary">
+                                        <span th:text="${attrEndPos1.size}"></span>/<span th:text="${attrEndPos1.size + attrEndNeg1.size}"></span> thuộc tính tích cực
+                                    </th>
+                                    <th colspan="2" class="text-center table-secondary">
+                                        <span th:text="${attrEndPos2.size}"></span>/<span th:text="${attrEndPos2.size + attrEndNeg2.size}"></span> thuộc tính tích cực
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrEndPos1}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrEndNeg1}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrEndPos2}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrEndNeg2}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <!-- END OF TABLE OF COMPARE -->
+                                <tr>
+                                    <th colspan="4" class="text-center table-info">Pin</th>
+                                </tr>
+                                
+                                <!-- TABLE OF COMPARE -->
+                                <tr>
+                                    <th colspan="2" class="text-center table-secondary">
+                                        <span th:text="${attrBattPos1.size}"></span>/<span th:text="${attrBattPos1.size + attrBattNeg1.size}"></span> thuộc tính tích cực
+                                    </th>
+                                    <th colspan="2" class="text-center table-secondary">
+                                        <span th:text="${attrBattPos2.size}"></span>/<span th:text="${attrBattPos2.size + attrBattNeg2.size}"></span> thuộc tính tích cực
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrBattPos1}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrBattNeg1}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrBattPos2}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrBattNeg2}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <!-- END OF TABLE OF COMPARE -->
+                                <tr>
+                                    <th colspan="4" class="text-center table-info">Dung lượng</th>
+                                </tr>
+                                
+                                <!-- TABLE OF COMPARE -->
+                                <tr>
+                                    <th colspan="2" class="text-center table-secondary">
+                                        <span th:text="${attrMemPos1.size}"></span>/<span th:text="${attrMemPos1.size + attrMemNeg1.size}"></span> thuộc tính tích cực
+                                    </th>
+                                    <th colspan="2" class="text-center table-secondary">
+                                        <span th:text="${attrMemPos2.size}"></span>/<span th:text="${attrMemPos2.size + attrMemNeg2.size}"></span> thuộc tính tích cực
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrMemPos1}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrMemNeg1}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrMemPos2}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrMemNeg2}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <!-- END OF TABLE OF COMPARE -->
+                                <tr>
+                                    <th colspan="4" class="text-center table-info">Khác</th>
+                                </tr>
+                                
+                                <!-- TABLE OF COMPARE -->
+                                <tr>
+                                    <th colspan="2" class="text-center table-secondary">
+                                        <span th:text="${attrOtherPos1.size}"></span>/<span th:text="${attrOtherPos1.size + attrOtherNeg1.size}"></span> thuộc tính tích cực
+                                    </th>
+                                    <th colspan="2" class="text-center table-secondary">
+                                        <span th:text="${attrOtherPos2.size}"></span>/<span th:text="${attrOtherPos2.size + attrOtherNeg2.size}"></span> thuộc tính tích cực
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrOtherPos1}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrOtherNeg1}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrOtherPos2}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="prod__attr__container">
+                                            <div class="prod__attr" th:each="attr: ${attrOtherNeg2}">
+                                                <span th:text="${attr}"></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <!-- END OF TABLE OF COMPARE -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.col -->
+            
+        
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+
+    
+    <!--Footer -->
+    <div class="col-md-12 footer-box">
+
+    </div>
+    <!-- /.col -->
+    <div class="col-md-12 end-box text-center">
+        &copy; 2021 | &nbsp; All Rights Reserved | &nbsp; www.sharepinion.com | &nbsp; 24x7 support | &nbsp; Email us: sharepinion@gmail.com
+    </div>
+    <!--Footer end -->
+    
+    <!--Core JavaScript file  -->
+    <script src="/js/jquery-1.10.2.js"></script>
+    <!--bootstrap JavaScript file  -->
+    <script src="/js/bs/bootstrap.js"></script>
+    <!--Slider JavaScript file  -->
+    <script src="/ItemSlider/js/modernizr.custom.63321.js"></script>
+    <script src="/ItemSlider/js/jquery.catslider.js"></script>
+    <script>
+        $(function () {
+
+            $('#mi-slider').catslider();
+
+        });
+
+		</script>
+</body>
+</html>
