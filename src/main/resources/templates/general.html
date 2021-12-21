@@ -1,0 +1,68 @@
+<nav class="navbar navbar-fixed-top bg-dark" role="navigation" th:fragment="navs">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/"><span>SHAREPINION</span>Administration</a>
+            <ul class="user-menu">
+                <li class="dropdown pull-right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> <span th:text="${session.account.name}"></span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="logout"  style="padding-left: 1vw; color: blueviolet;"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Đăng xuất</a></li>
+                    </ul>
+                </li> 
+            </ul>
+        </div>
+                        
+    </div>
+</nav>
+
+
+<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar" th:fragment="sidebar">
+    <ul class="nav menu">
+        <!-- <li >
+            <a href="index.php">
+                <svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> 
+                Dashboard
+            </a>
+        </li> -->
+        <li th:if="${page == 'Member'}" class="active" >
+            <a href="/members"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg>
+                Quản lý thành viên
+            </a>
+        </li>
+        <li th:unless="${page == 'Member'}" >
+            <a href="/members"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg>
+                Quản lý thành viên
+            </a>
+        </li>
+        <li th:if="${page == 'Product'}" class="active">
+            <a href="/admin/product"><svg class="glyph stroked tag"><use xlink:href="#stroked-tag"/></svg>
+                Quản lý sản phẩm
+            </a>
+        </li>
+        <li th:unless="${page == 'Product'}">
+            <a href="/admin/product"><svg class="glyph stroked tag"><use xlink:href="#stroked-tag"/></svg>
+                Quản lý sản phẩm
+            </a>
+        </li>
+        <li th:if="${page == 'Pullout'}" class="active">
+            <a href="/admin/comment"><svg class="glyph stroked open folder"><use xlink:href="#stroked-open-folder"/></svg>
+                Quản lý đánh giá
+            </a>
+        </li>
+        <li th:unless="${page == 'Pullout'}" >
+            <a href="/admin/comment"><svg class="glyph stroked open folder"><use xlink:href="#stroked-open-folder"/></svg>
+                Quản lý đánh giá
+            </a>
+        </li>
+        <li th:if="${page == 'Calc'}" class="active">
+            <a href="/admin/api"><svg class="glyph stroked app-window-with-content"><use xlink:href="#stroked-app-window-with-content"></use></svg>
+                Phân tích 
+            </a>
+        </li>
+        <li th:unless="${page == 'Calc'}">
+            <a href="/admin/api"><svg class="glyph stroked app-window-with-content"><use xlink:href="#stroked-app-window-with-content"></use></svg>
+                Phân tích
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,5 +1,6 @@
 package sharepinion.sharepinion.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -12,7 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,22 +24,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import sharepinion.sharepinion.data.ProductRepository;
+import sharepinion.sharepinion.data.SubCategoryRepository;
 import sharepinion.sharepinion.data.AccountRepository;
 import sharepinion.sharepinion.data.AttributeRepository;
 import sharepinion.sharepinion.data.CommentRepository;
+import sharepinion.sharepinion.data.FileUploadUtil;
 import sharepinion.sharepinion.data.ProductImageRepository;
 import sharepinion.sharepinion.model.Account;
 import sharepinion.sharepinion.model.Attribute;
 import sharepinion.sharepinion.model.Comment;
 import sharepinion.sharepinion.model.Product;
 import sharepinion.sharepinion.model.ProductImage;
+import sharepinion.sharepinion.model.SubCategory;
 
 @Controller
 public class ProductController {
@@ -48,14 +52,18 @@ public class ProductController {
     private final ProductImageRepository prdImgRepo;
     private final CommentRepository cmtRepo;
     private final AttributeRepository attrRepo;
+    private final SubCategoryRepository subCateRepo;
     
     @Autowired
-    public ProductController(Environment env, AccountRepository accRepo, ProductRepository prdRepo, ProductImageRepository prdImgRepo, CommentRepository cmtRepo, AttributeRepository attrRepo) {
+    public ProductController(Environment env, AccountRepository accRepo, ProductRepository prdRepo, 
+                            ProductImageRepository prdImgRepo, CommentRepository cmtRepo, AttributeRepository attrRepo,
+                            SubCategoryRepository subCateRepo) {
         this.prdRepo = prdRepo;
         this.prdImgRepo = prdImgRepo;
         this.cmtRepo = cmtRepo;
         this.accRepo = accRepo;
         this.attrRepo = attrRepo;
+        this.subCateRepo = subCateRepo;
     }
 
     @GetMapping("/product/{id}")
@@ -391,4 +399,68 @@ public class ProductController {
         return "compare";
     }
 
+    @GetMapping("/admin/product")
+    public String prdAdmin(Model model, HttpSession session) {
+        if (session.getAttribute("account") == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("page", "Product");
+        model.addAttribute("title", "Quản lý sản phẩm");
+
+        ArrayList<Product> prdList = prdRepo.allProduct();
+        ArrayList<Integer> cmtList = new ArrayList<>();
+        for(int i = 0; i < prdList.size(); i++){
+            ArrayList<ProductImage> images = prdImgRepo.getImage(prdList.get(i).getId());
+            cmtList.add(cmtRepo.getCmtNumber(prdList.get(i).getId()));
+            prdList.get(i).setImages(images);
+        }
+        
+        System.out.print(prdList.size());
+        model.addAttribute("prdList", prdList);
+        model.addAttribute("cmtList", cmtList);
+
+        return "product_admin";
+
+    }
+
+    @GetMapping("/admin/add_product")
+    public String addPrdAdmin(Model model, HttpSession session){
+        if (session.getAttribute("account") == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("page", "Product");
+        model.addAttribute("title", "Quản lý sản phẩm");
+
+        ArrayList<SubCategory> subList = subCateRepo.findAllSubCategory();
+
+        model.addAttribute("product", new Product());
+        model.addAttribute("subCategory", new SubCategory());
+        model.addAttribute("images", new ArrayList<ProductImage>());
+        model.addAttribute("subCate", subList);
+
+        return "add_prd";
+    }
+
+    @PostMapping("/admin/add_product")
+    public String addPrdAdminPost(@RequestParam("prd_images") MultipartFile multipartFile, Product product, SubCategory subCate, Model model, HttpSession session) throws IOException{
+        if (session.getAttribute("account") == null) {
+            return "redirect:/admin/login";
+        }
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        FileUploadUtil.saveFile("img", fileName, multipartFile);
+        
+        System.out.println(product.getName());
+        System.out.println(fileName);
+        System.out.println(product.getSubCategory().getId());
+        ArrayList<SubCategory> subList = subCateRepo.findAllSubCategory();
+
+        model.addAttribute("product", new Product());
+        model.addAttribute("subCategory", new SubCategory());
+        model.addAttribute("images", new ArrayList<ProductImage>());
+        model.addAttribute("subCate", subList);
+
+        return "add_prd";
+    }
 }

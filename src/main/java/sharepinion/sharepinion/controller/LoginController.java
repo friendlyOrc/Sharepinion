@@ -74,4 +74,50 @@ public class LoginController {
         return "login";
 
     }
+
+    @GetMapping("/admin/login")
+    public String login_admin(Model model, HttpSession session,  @RequestParam(required = false, name="msg") String msg) {
+        if (session.getAttribute("account") != null) {
+            return "redirect:/admin";
+        }
+
+        model.addAttribute("account", new Account());
+        model.addAttribute("page", "Login");
+        model.addAttribute("title", "Đăng nhập");
+
+        model.addAttribute("msg", msg);
+        
+        return "login_admin";
+    }
+
+    @PostMapping("/admin/login")
+    public String postLoginAdmin(Account account, Model model, HttpSession session) {
+        if (val.specialKey(account.getEmail())) {
+            ArrayList<Account> accList = accRepo.findAccount(account.getEmail(), account.getPassword());
+            if (accList.size() == 1) {
+                Account acc = accList.get(0);
+                if(acc.getRole() == 1){
+                    session.setAttribute("account", accList.get(0));
+                    return "redirect:/admin";
+                }else{
+                    return "redirect:/admin/login?msg=role";
+                }
+            } else {
+                accList = accRepo.findAccountByEmail(account.getEmail());
+                if (accList.size() == 0) {
+                    model.addAttribute("msg", "username");
+                } else {
+                    model.addAttribute("msg", "password");
+                }
+                model.addAttribute("title", "Đăng nhập");
+                return "login";
+            }
+        } else {
+            model.addAttribute("msg", "speUsername");
+        }
+
+        model.addAttribute("title", "Đăng nhập");
+        return "login";
+
+    }
 }

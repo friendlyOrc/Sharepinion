@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="head::head">
+    
+<body>
+
+    <div class="row justify-content-center">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="text-center">
+                    <div class="panel-heading"><h1><b>SHARE</b>PINION</div>
+                    <p>Admin site</p>
+                </div>
+                <div class="panel-body">
+                    <div th:switch="${msg}"> 
+                        <div th:case="username"><div class="alert alert-danger" >Tài khoản không tồn tại!</div></div>
+                        <div th:case="password"><div class="alert alert-danger" >Mật khẩu sai!</div></div>
+                        <div th:case="speUsername"><div class="alert alert-danger" >Tên đăng nhập không được chứa ký tự đặc biệt!</div></div>
+                        <div th:case="role"><div class="alert alert-danger" >Tài khoản không có quyền truy cập!</div></div>
+                        <p th:case="*"></p> 
+                    </div>
+                    
+                        <form role="form" th:object="${account}" method="POST" class="login__form text-center">
+                            <fieldset>
+                                <div class="form-group text-left">
+                                    <label for="mail">Tên đăng nhập:</label>
+                                    <input class="form-control" placeholder="Tên đăng nhập" name="mail" th:field="*{email}" type="text" autofocus required>
+                                </div>
+                                <div class="form-group text-left">
+                                    <label for="pass">Mật khẩu:</label>
+                                    <input class="form-control" placeholder="Mật khẩu" th:field="*{password}" name="pass" type="password" value="" required>
+                                </div>
+                                <!-- <div class="checkbox">
+								<label>
+									<input name="remember" type="checkbox" value="Remember Me">Nhớ tài khoản
+								</label>
+							</div> -->
+                                <button type="submit" class="btn btn-primary" name="sbm">Đăng nhập</button>
+                            </fieldset>
+                        </form>
+                </div> 
+            </div>
+        </div>
+        <!-- /.col--> 
+    </div>
+    <!-- /.row -->
+
+</body>
+
+</html>

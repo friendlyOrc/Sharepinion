@@ -22,4 +22,11 @@ public interface CommentRepository extends CrudRepository<Comment, Long> {
     
     @Query(value = "SELECT COUNT(id) from `comment` WHERE prdID = ?1", nativeQuery = true)
     Integer getCmtNumber(int id);
+
+    @Query(value = "SELECT COUNT(id) from `comment`", nativeQuery = true)
+    Integer getAllCmtNumber();
+    @Query(value = "SELECT COUNT(id) from `comment` WHERE label = 1", nativeQuery = true)
+    Integer getAllCmtPosNumber();
+    @Query(value = "SELECT COUNT(id) from `comment` WHERE label = -1", nativeQuery = true)
+    Integer getAllCmtNegNumber();
 }

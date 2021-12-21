@@ -50,5 +50,26 @@ public class HomeController {
         return "index";
 
     }
+    @GetMapping("/admin")
+    public String home_admin(Model model, HttpSession session) {
+        if (session.getAttribute("account") == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("page", "Home");
+        model.addAttribute("title", "Trang chủ");
+
+        int prdNum = prdRepo.allProduct().size();
+        int cmtNum = cmtRepo.getAllCmtNumber();
+        int cmtPosNum = cmtRepo.getAllCmtPosNumber();
+        int cmtNegNum = cmtRepo.getAllCmtNegNumber();
+        
+        model.addAttribute("prdNum", prdNum);
+        model.addAttribute("cmtNum", cmtNum);
+        model.addAttribute("cmtPosNum", cmtPosNum);
+        model.addAttribute("cmtNegNum", cmtNegNum);
+        return "index_admin";
+
+    }
 
 }

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="head::head">
+
+<body>
+    <nav th:replace="general::nav">
+
+    </nav>
+	<div class="row">
+        <div th:replace="general::sidebar">
+
+        </div>
+            
+        <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main text-center">	
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <div class="panel panel-blue panel-widget ">
+                        <div class="row no-padding">
+                            <div class="col-sm-3 col-lg-5 widget-left">
+                                <svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>
+                            </div>
+                            <div class="col-sm-9 col-lg-7 widget-right">
+                                <div class="large" th:text="${prdNum}"></div>
+                                <div class="text-muted">Sản Phẩm</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <div class="panel panel-orange panel-widget">
+                        <div class="row no-padding">
+                            <div class="col-sm-3 col-lg-5 widget-left">
+                                <svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
+                            </div>
+                            <div class="col-sm-9 col-lg-7 widget-right">
+                                <div class="large" th:text="${cmtNum}"></div>
+                                <div class="text-muted">Bình Luận</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <div class="panel panel-teal panel-widget">
+                        <div class="row no-padding">
+                            <div class="col-sm-3 col-lg-5 widget-left">
+                                <svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
+                            </div>
+                            <div class="col-sm-9 col-lg-7 widget-right">
+                                <div class="large" th:text="${cmtPosNum}"></div>
+                                <div class="text-muted">Đánh giá tích cực</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <div class="panel panel-red panel-widget">
+                        <div class="row no-padding">
+                            <div class="col-sm-3 col-lg-5 widget-left">
+                                <svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg>
+                            </div>
+                            <div class="col-sm-9 col-lg-7 widget-right">
+                                <div class="large" th:text="${cmtNegNum}"></div>
+                                <div class="text-muted">Đánh giá tiêu cực</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div><!--/.row-->
+
+        </div>	<!--/.main-->
+    </div>	
+	
+    <div th:replace="js::js">
+
+    </div>
+</body>
+
+</html>
