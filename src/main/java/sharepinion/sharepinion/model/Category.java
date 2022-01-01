@@ -1,6 +1,7 @@
 package sharepinion.sharepinion.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -27,4 +28,8 @@ public class Category implements Serializable {
 
     @NotNull
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "catid")
+    private List<SubCategory> subcategory;
 }

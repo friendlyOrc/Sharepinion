@@ -22,7 +22,7 @@
                 <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-                        <li class="active">Danh sách sản phẩm</li>
+                        <li class="active">Danh sách tài khoản</li>
                     </ol>
                 </div><!--/.row-->
                 
@@ -63,8 +63,8 @@
                                             <td class="text-center"><span th:text="${cmtList[i.index]}"></span></td>
                                             <td class="form-group">
                                                 <a th:href="'/admin/add_cmt/' + ${prd.id}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-                                                <a th:href="'/admin/edit_product/' + ${prd.id}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                                                <a onclick = "return delPrd();" th:href="'/admin/delete_prd/' + ${prd.id}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+                                                <a href="/admin/edit_product/" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                                <a onclick = "return delPrd();" href="/admin/delete_prd/" class="btn btn-danger"><i class="fa fa-remove"></i></a>
                                             </td>
                                         </tr>
                                     </tbody>

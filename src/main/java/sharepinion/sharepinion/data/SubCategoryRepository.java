@@ -14,6 +14,9 @@ public interface SubCategoryRepository extends CrudRepository<SubCategory, Long>
     @Query(value = "SELECT * FROM `sub_category` WHERE catid = ?1", nativeQuery = true)
     ArrayList<SubCategory> findAllSubCategory(int id);
 
+    @Query(value = "SELECT * FROM `sub_category` WHERE id = ?1", nativeQuery = true)
+    SubCategory findById(int id);
+
     @Query(value = "SELECT * FROM `sub_category`", nativeQuery = true)
     ArrayList<SubCategory> findAllSubCategory();
     

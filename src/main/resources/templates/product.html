@@ -194,9 +194,121 @@
                 </div>
 
                 <div class="row prod__second__section">
-                    <div class="col-md-10 prod__section">
-                        <h3>Mô tả sản phẩm</h3>
-                        <p th:text="${prd.des}" style="white-space: pre-line"></p>
+                    <div class="col-md-10 " style="padding: 0 !important;">
+                        <div class="prod__section">
+                            <h3>Mô tả sản phẩm</h3>
+                            <p th:text="${prd.des}" style="white-space: pre-line"></p>
+                        </div>
+                        
+                        <div class="prod__section" style="margin-top: 1vw;">
+                            <h3>Đánh giá sản phẩm</h3>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="comment__card" th:each="cmt: ${cmt}">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <img th:src="'/img/' + ${cmt.account.avatar}" alt="User avatar" />
+                                            </div>
+                                            <div class="col-md-11">
+                                                <span class="badge badge-info" th:text="${cmt.account.name}"></span> <span th:text="${cmt.cmtdate}"></span> <span th:text="${cmt.cmttime}"></span>
+                                                <p th:text="${cmt.content}">Sản phẩm tuyệt vời!</p>
+                                            </div>
+                                            <hr style="width:30%;text-align:left;margin-left:0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <ul class="nav nav-tabs" id="cmTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="usercmt-tab" data-toggle="tab" href="#usercmt" role="tab" aria-controls="usercmt" aria-selected="true">
+                                        Đánh giá của người dùng
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="shopee-tab" data-toggle="tab" href="#shoppecmt" role="tab" aria-controls="shoppecmt" aria-selected="false">
+                                        Đánh giá Shopee
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="cmTabContent">
+
+                                <div class="tab-pane fade show active" id="usercmt" role="tabpanel" aria-labelledby="usercmt-tab">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="comment__card" th:each="cmt: ${cmtList}">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <img th:src="'/img/' + ${cmt.account.avatar}" alt="User avatar" />
+                                                    </div>
+                                                    <div class="col-md-11">
+                                                        <span class="badge badge-info" th:text="${cmt.account.name}"></span> <span th:text="${cmt.cmtdate}"></span> <span th:text="${cmt.cmttime}"></span>
+                                                        <p th:text="${cmt.content}">Sản phẩm tuyệt vời!</p>
+                                                    </div>
+                                                    <hr style="width:30%;text-align:left;margin-left:0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-pane fade" id="shoppecmt" role="tabpanel" aria-labelledby="shopee-tab">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="comment__card" th:each="cmt: ${cmtShopeeList}">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <img th:src="'/img/' + ${cmt.account.avatar}" alt="User avatar" />
+                                                    </div>
+                                                    <div class="col-md-11">
+                                                        <span class="badge badge-info" th:text="${cmt.account.name}"></span> <span th:text="${cmt.cmtdate}"></span> <span th:text="${cmt.cmttime}"></span>
+                                                        <p th:text="${cmt.content}">Sản phẩm tuyệt vời!</p>
+                                                    </div>
+                                                    <hr style="width:30%;text-align:left;margin-left:0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div> -->
+                            
+
+                            <div th:switch="${session.account}">
+
+                                <div th:case="null" class="border border-warning text-center login__required__popup">
+                                    Vui lòng đăng nhập để đăng bình luận!
+                                    <br>
+                                    <a href="/login" class="badge badge-primary">Đăng nhập</a>
+                                </div>
+
+                                <div th:case="*" class="comment__card comment__card__self">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <img th:src="'/img/' + ${session.account.avatar}" alt="User avatar" />
+                                        </div>
+                                        <div class="col-md-11">
+                                            <span class="badge badge-warning" th:text="${session.account.name}"></span>
+                                            <form role="form" th:object="${comment}" method="POST" class="">
+                                                <fieldset>
+                                                    <div class="form-group text-left">
+                                                        <textarea class="form-control" placeholder="Đánh giá của bạn" name="content" th:field="*{content}" type="text" required></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary" name="sbm">Gửi</button>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                        <hr style="width:30%;text-align:left;margin-left:0">
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            
+
+                            
+                        </div>
                     </div>
                     
                     <div class="col-md-2">
@@ -210,21 +322,63 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-10 prod__section">
                         <h3>Đánh giá sản phẩm</h3>
                         <hr>
-                        <div class="comment__card" th:each="cmt: ${cmtList}">
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <img th:src="'/img/' + ${cmt.account.avatar}" alt="User avatar" />
+                        <ul class="nav nav-tabs" id="cmTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="usercmt-tab" data-toggle="tab" href="#usercmt" role="tab" aria-controls="usercmt" aria-selected="true">
+                                    Đánh giá của người dùng
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="shopee-tab" data-toggle="tab" href="#shoppecmt" role="tab" aria-controls="shoppecmt" aria-selected="false">
+                                    Đánh giá Shopee
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="cmTabContent">
+
+                            <div class="tab-pane fade show active" id="usercmt" role="tabpanel" aria-labelledby="usercmt-tab">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="comment__card" th:each="cmt: ${cmtList}">
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <img th:src="'/img/' + ${cmt.account.avatar}" alt="User avatar" />
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <span class="badge badge-info" th:text="${cmt.account.name}"></span> <span th:text="${cmt.cmtdate}"></span> <span th:text="${cmt.cmttime}"></span>
+                                                    <p th:text="${cmt.content}">Sản phẩm tuyệt vời!</p>
+                                                </div>
+                                                <hr style="width:30%;text-align:left;margin-left:0">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-11">
-                                    <span class="badge badge-info" th:text="${cmt.account.name}"></span> <span th:text="${cmt.cmtdate}"></span> <span th:text="${cmt.cmttime}"></span>
-                                    <p th:text="${cmt.content}">Sản phẩm tuyệt vời!</p>
-                                </div>
-                                <hr style="width:30%;text-align:left;margin-left:0">
                             </div>
+                            
+                            <div class="tab-pane fade" id="shoppecmt" role="tabpanel" aria-labelledby="shopee-tab">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="comment__card" th:each="cmt: ${cmtShopeeList}">
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <img th:src="'/img/' + ${cmt.account.avatar}" alt="User avatar" />
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <span class="badge badge-info" th:text="${cmt.account.name}"></span> <span th:text="${cmt.cmtdate}"></span> <span th:text="${cmt.cmttime}"></span>
+                                                    <p th:text="${cmt.content}">Sản phẩm tuyệt vời!</p>
+                                                </div>
+                                                <hr style="width:30%;text-align:left;margin-left:0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
                         
 
@@ -262,9 +416,7 @@
 
                         
                     </div>
-                    
-                    
-                </div>
+                </div> -->
             </div>
             <!-- /.col -->
             

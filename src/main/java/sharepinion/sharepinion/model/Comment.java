@@ -42,6 +42,9 @@ public class Comment implements Serializable{
     private Time cmttime;
 
     @NotNull
+    private int trained;
+
+    @NotNull
     @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "accID")
     private Account account;

@@ -13,5 +13,7 @@ public interface ProductImageRepository extends CrudRepository<ProductImage, Lon
     @Query(value = "SELECT * FROM `prdImage` WHERE productID = ?1", nativeQuery = true)
     ArrayList<ProductImage> getImage(int id);
 
+    @Query(value = "SELECT id FROM `prdImage` order by id DESC LIMIT 1", nativeQuery = true)
+    int getHighestID();
 
 }

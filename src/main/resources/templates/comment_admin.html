@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="head::head">
+
+<body>
+    <nav th:replace="general::nav">
+
+    </nav>
+	<div class="row">
+        <div th:replace="general::sidebar">
+
+        </div>
+            
+        <script>
+            function delPrd(){
+                var confirmBox = confirm("Bạn chắc chứ?");
+                return confirmBox;
+            }
+        </script>
+            <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+                        <li class="active"> Danh sách đánh giá</li>
+                    </ol>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Thống kê</h1>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-border">
+                            <thead>
+                                <tr>
+                                    <th>Số lượng đánh giá mới</th>
+                                    <th>Số lượng đánh giá đã huấn luyện</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span th:text="${nontrained.size}"></span></td>
+                                    <td><span th:text="${sum}"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+                
+                <div id="toolbar" class="btn-group">
+                    <a href="/admin/add_product" class="btn btn-success">
+                        <i class="fa fa-arrow-circle-o-down"></i> Chạy lại mô hình huấn luyện
+                    </a>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Danh sách đánh giá</h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <table data-toolbar="#toolbar"data-toggle="table" class="table table-border">
+        
+                                    <thead>
+                                    <tr>
+                                        <th data-field="id" data-sortable="true">ID</th>
+                                        <th>Sản phẩm</th>
+                                        <th data-field="name"  data-sortable="true">Nội dung</th>
+                                        <th data-field="price" data-sortable="true">Phân loại</th>
+                                        <th data-field="price" data-sortable="true">Huấn luyện</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr th:each="cmt, i: ${cmtList}">
+                                            <td th:text="${cmt.id}"></td>
+                                            <td th:text="${cmt.product.name}"></td>
+                                            <td style="max-width: 15vw" th:text="${cmt.content}"></td>
+
+                                            <td th:if="${cmt.label == 1}"  >
+                                                Tích cực
+                                            </td>
+                                            <td th:if="${cmt.label == -1}"  >
+                                                Tiêu cực
+                                            </td>
+                                            <td th:if="${cmt.label == 0}"  >
+                                                Chưa phân tích
+                                            </td>
+                                        
+                                            <td th:if="${cmt.trained == 1}"  >
+                                                Đã huấn luyện
+                                            </td>
+                                            <td th:unless="${cmt.label == 0}"  >
+                                                Chưa huấn luyện
+                                            </td>
+                                            <td class="form-group">
+                                                <a href="/admin/edit_product/" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                                <a onclick = "return delPrd();" href="/admin/delete_prd/" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="panel-footer text-center">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.row-->	
+            </div>	<!--/.main-->
+        
+        
+    </div>	
+	
+    <div th:replace="js::js">
+
+    </div>
+</body>
+
+</html>

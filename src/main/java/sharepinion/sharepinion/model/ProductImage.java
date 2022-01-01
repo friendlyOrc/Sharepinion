@@ -15,7 +15,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "prdImg")
+@Table(name = "prdimage")
 @NoArgsConstructor
 @AllArgsConstructor
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
@@ -30,4 +30,7 @@ public class ProductImage implements Serializable  {
 
     @NotNull
     private String name;
+
+    @NotNull
+    private int productid;
 }

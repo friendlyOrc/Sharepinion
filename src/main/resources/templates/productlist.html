@@ -9,71 +9,29 @@
     <nav th:replace="navbar::navbar">
     </nav>
 
-    <div class="slider_container">
-
-        <!-- Panels -->
-        <div class="swipe">
-            <div class="panel" data-img="img/slider_2.jpg">
-            
-            </div>
-            <div class="panel" data-img="img/slider_1.jpg">
-            </div>
-            <div class="panel" data-img="img/slider_3.jpg">
-            </div>
-            <div class="panel" data-img="img/slider_4.jpg">
-            </div>
-        </div>
-
-        <!-- Info -->
-        <div class="info">
-            <div class="inner">
-            <h3>Hãy để lại đánh giá của bạn!</h3>
-            <p>Chúng tôi quan tâm đến cảm nhận của bạn về sản phẩm!</p>
-            </div>
-            <div class="buttons">
-            <button class="btn-prev" disabled>&larr;</button>
-            <button class="btn-next">&rarr;</button>
-            </div>
-        </div>
-
-    </div>
 
 
     
     <div class="container">
         <!-- /.row -->
         <div class="row">
-            <div class="col-md-3">
-                <div th:each="cate, i: ${cate}">
-                    
-                    <div th:switch="${i.index}">
-                        <a th:case="1" href="#" th:text="${cate.name}" class="list-group-item bg-success"></a>
-                        <a th:case="2" href="#" th:text="${cate.name}" class="list-group-item bg-danger"></a>
-                        <a th:case="3" href="#" th:text="${cate.name}" class="list-group-item bg-warning"></a>
-                        <a th:case="4" href="#" th:text="${cate.name}" class="list-group-item bg-info"></a>
-                        <a th:case="5" href="#" th:text="${cate.name}" class="list-group-item bg-success"></a>
-                        <a th:case="6" href="#" th:text="${cate.name}" class="list-group-item bg-danger"></a>
-                        <a th:case="*" href="#" th:text="${cate.name}" class="list-group-item active"></a>
+            <div class="col-md-12">
+                <style>
+                    .home__prd__list__search{
+                        padding-top: 2vw;
+                    }
+                </style>
+                <div class="home__prd__list__search">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>Kết quả tìm kiếm: <span th:text="${search}"></span></h3>
+                        </div>
                     </div>
-                    <ul class="list-group">
-
-                        <li class="list-group-item" th:each="sub: ${cate.subcategory}" th:text="${sub.name}">
-                            <!-- <span class="badge badge-pill badge-success pull-right">234</span> -->
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.div -->
-            </div>    
-            <!-- /.col -->
-            <div class="col-md-9">
-
-                <div class="home__prd__list">
-                    
                     <!-- /.row -->
                     <div class="row">
                         <div class="card-columns">
                             <div th:each="prd, i: ${prdList}" class="card p-3" th:onclick="'window.location.href=\'/product/' + ${ + prd.id} + '\''" >
-                                <img class="card-img-top" th:src="'img/' + ${prd.images[0].name}" alt="Card image cap">
+                                <img class="card-img-top" th:src="'/img/' + ${prd.images[0].name}" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${prd.name}"></h5>
                                     <span class="badge badge-warning" th:text="${#numbers.formatDecimal(prd.price, 0, 'COMMA', 2, 'POINT')}"></span>

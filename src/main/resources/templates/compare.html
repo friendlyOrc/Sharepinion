@@ -117,17 +117,46 @@
                                 <tr>
                                     <th colspan="4" class="text-center table-info">Màn hình</th>
                                 </tr>
+                                <style>
+                                    .comparebar, .compare--succ, .compare--neg{
+                                        width: 100%;
+                                        height: 100%;
+                                        padding: 0 !important;
+                                        margin: 0 !important;
+                                    }
+                                    /* .compare--succ{
+                                        background-color: green;
+                                        margin: 0 !important;
+                                    }
+                                    .compare--neg{
+                                        background-color: red;
+                                        margin: 0 !important;
+                                    } */
+                                    .compareleft-9{
+                                        width: 90%;
+                                    }
+                                    .compareright-1{
+                                        width: 10%;
+                                    }   
+                                    .hidden{
+                                        display: none;
+                                    }
+                                </style>
                                 <!-- TABLE OF COMPARE -->
                                 <tr>
-                                    <th colspan="2" class="text-center table-secondary">
-                                        <span th:text="${attrScreenPos1.size}"></span>/<span th:text="${attrScreenPos1.size + attrScreenNeg1.size}"></span> thuộc tính tích cực
+                                    <th colspan="2" class="text-center table-secondary" style="padding:  0 !important;">
+                                        <!-- <span th:text="${attrScreenPos1.size}"></span>/<span th:text="${attrScreenPos1.size + attrScreenNeg1.size}"></span> thuộc tính tích cực -->
+                                        <div class="comparebar d-flex">
+                                            <div class=" compare--succ compareleft-9 bg-success"><span class="fa fa-thumbs-o-up"></span></div>
+                                            <div class=" compare--neg compareright-1 bg-danger"><span class="fa fa-thumbs-o-down"></span></div>
+                                        </div>
                                     </th>
                                     <th colspan="2" class="text-center table-secondary">
                                         <span th:text="${attrScreenPos2.size}"></span>/<span th:text="${attrScreenPos2.size + attrScreenNeg2.size}"></span> thuộc tính tích cực
                                     </th>
                                 </tr>
 
-                                <tr>
+                                <tr class="hidden">
                                     <th>
                                         <div class="prod__attr__container">
                                             <div class="prod__attr" th:each="attr: ${attrScreenPos1}">

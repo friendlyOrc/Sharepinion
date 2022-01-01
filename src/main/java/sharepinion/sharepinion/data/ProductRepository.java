@@ -28,4 +28,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     @Query(value = "SELECT * FROM `product`, `comment`WHERE `comment`.id = ?1 AND `comment`.prdID = `product`.id;", nativeQuery = true)
     Product getProductViaCmt(int cmtId);
 
+    @Query(value = "SELECT id FROM `product` order by id DESC LIMIT 1", nativeQuery = true)
+    int getHighestID();
 }

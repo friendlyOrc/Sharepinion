@@ -41,27 +41,16 @@ public class Product implements Serializable {
     private String des;
 
     @NotNull
-    private int label;
-    // -99 = not define
-    // -2 = Very negative
-    // -1 = mostly negative
-    // 0 = Mixed 
-    // 1 = Mostly Positive
-    // 2 = Very Positive
-
-    @NotNull
     @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "subcateID")
     private SubCategory subCategory;
     
-    @NotNull
     private Date lastcmtdate;
 
-    @NotNull
     private Time lastcmttime;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "productID")
+    @JoinColumn(name = "id")
     private List<ProductImage> images;
 
 }

@@ -44,17 +44,17 @@
                 Quản lý sản phẩm
             </a>
         </li>
-        <li th:if="${page == 'Pullout'}" class="active">
+        <li th:if="${page == 'Comment'}" class="active">
             <a href="/admin/comment"><svg class="glyph stroked open folder"><use xlink:href="#stroked-open-folder"/></svg>
                 Quản lý đánh giá
             </a>
         </li>
-        <li th:unless="${page == 'Pullout'}" >
+        <li th:unless="${page == 'Comment'}" >
             <a href="/admin/comment"><svg class="glyph stroked open folder"><use xlink:href="#stroked-open-folder"/></svg>
                 Quản lý đánh giá
             </a>
         </li>
-        <li th:if="${page == 'Calc'}" class="active">
+        <!-- <li th:if="${page == 'Calc'}" class="active">
             <a href="/admin/api"><svg class="glyph stroked app-window-with-content"><use xlink:href="#stroked-app-window-with-content"></use></svg>
                 Phân tích 
             </a>
@@ -63,6 +63,6 @@
             <a href="/admin/api"><svg class="glyph stroked app-window-with-content"><use xlink:href="#stroked-app-window-with-content"></use></svg>
                 Phân tích
             </a>
-        </li>
+        </li> -->
     </ul>
 </div>
