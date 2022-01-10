@@ -28,7 +28,7 @@
                 
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Thống kê</h1>
+                        <h1 class="page-header">Thống kê</h1> <span class="badge badge-info">Chưa cần chạy lại huấn luyện</span>
                     </div>
                 </div>
                 
@@ -51,9 +51,13 @@
                         
                     </div>
                 </div>
-                
+                <div th:switch="${msg}" style="width: 20vw"> 
+                    <div th:case="updated"><div class="alert alert-success" >Cập nhật mô hình thành công!</div></div>
+                    <div th:case="updatefail"><div class="alert alert-danger" >Cập nhật mô hình gặp lỗi!</div></div>
+                    <p th:case="*"></p> 
+                </div>
                 <div id="toolbar" class="btn-group">
-                    <a href="/admin/add_product" class="btn btn-success">
+                    <a href="/admin/update" class="btn btn-success">
                         <i class="fa fa-arrow-circle-o-down"></i> Chạy lại mô hình huấn luyện
                     </a>
                 </div>
@@ -100,12 +104,12 @@
                                             <td th:if="${cmt.trained == 1}"  >
                                                 Đã huấn luyện
                                             </td>
-                                            <td th:unless="${cmt.label == 0}"  >
+                                            <td th:if="${cmt.trained == 0}"  >
                                                 Chưa huấn luyện
                                             </td>
                                             <td class="form-group">
-                                                <a href="/admin/edit_product/" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                                                <a onclick = "return delPrd();" href="/admin/delete_prd/" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+                                                <a th:href="'/admin/edit_cmt/' + ${cmt.id}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                                <a onclick = "return delPrd();" th:href="'/admin/delete_cmt/' + ${cmt.id}" class="btn btn-danger"><i class="fa fa-remove"></i></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -122,7 +126,6 @@
                     </div>
                 </div><!--/.row-->	
             </div>	<!--/.main-->
-        
         
     </div>	
 	

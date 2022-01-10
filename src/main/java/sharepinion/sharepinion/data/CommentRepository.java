@@ -2,9 +2,11 @@ package sharepinion.sharepinion.data;
 
 import java.util.ArrayList;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 // import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import sharepinion.sharepinion.model.Comment;
 
@@ -36,4 +38,17 @@ public interface CommentRepository extends CrudRepository<Comment, Long> {
 
     @Query(value = "SELECT COUNT(id) from `comment` WHERE label = -1", nativeQuery = true)
     Integer getAllCmtNegNumber();
+    
+    @Modifying
+    @Transactional
+    @Query(value = "Update `comment` set trained = 1 where trained = 0", nativeQuery = true)
+    void updateNonTrained();
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM `comment` WHERE id = ?1", nativeQuery = true)
+    void deleteCmt(int id);
+
+    @Query(value = "SELECT * FROM `comment` WHERE id = ?1", nativeQuery = true)
+    Comment getCmt(int id);
 }

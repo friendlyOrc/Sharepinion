@@ -73,8 +73,6 @@ public class ProductController {
     @GetMapping("/product/{id}")
     public String home(@PathVariable int id, Model model, HttpSession session) {
 
-        model.addAttribute("page", "Product");
-        model.addAttribute("title", "Trang chủ");
 
         Product prd = prdRepo.findProduct(id);
         ArrayList<ProductImage> images = prdImgRepo.getImage(id);
@@ -144,6 +142,9 @@ public class ProductController {
         model.addAttribute("attrPos", (attrPos.size() > 10)? attrPos.subList(0, 9) : attrPos);
         model.addAttribute("attrNeg", (attrNeg.size() > 10)? attrNeg.subList(0, 9) : attrNeg);
         model.addAttribute("sameCate", sameCate);
+
+        model.addAttribute("page", "Product");
+        model.addAttribute("title", prd.getName());
         return "product";
     }
 
@@ -227,12 +228,11 @@ public class ProductController {
         }
     }
 
-
     @GetMapping("/compare/{id1}/{id2}")
     public String compare(@PathVariable int id1,@PathVariable int id2, Model model, HttpSession session) {
 
         model.addAttribute("page", "Compare");
-        model.addAttribute("title", "Trang chủ");
+        model.addAttribute("title", "So sánh sản phẩm");
 
         Product prd1 = prdRepo.findProduct(id1);
         Product prd2 = prdRepo.findProduct(id2);
@@ -328,7 +328,7 @@ public class ProductController {
             if(attrPos1.get(i).getContent().contains("màn hình") || attrPos1.get(i).getContent().contains("man hinh")
             || attrPos1.get(i).getContent().contains("phân giải")){
                 attrScreenPos1.add(attrPos1.get(i).getContent());
-            }else if(attrPos1.get(i).getContent().contains("pin")){
+            }else if(attrPos1.get(i).getContent().contains("pin") || attrPos1.get(i).getContent().contains("sạc")){
                 attrBattPos1.add(attrPos1.get(i).getContent());
             }else if(attrPos1.get(i).getContent().contains("dung lượng") || attrPos1.get(i).getContent().contains("bộ nhớ") 
                     || attrPos1.get(i).getContent().contains("dung luong") || attrPos1.get(i).getContent().contains("ram")){
@@ -344,7 +344,7 @@ public class ProductController {
             if(attrPos2.get(i).getContent().contains("màn hình") || attrPos2.get(i).getContent().contains("man hinh")
             || attrPos2.get(i).getContent().contains("phân giải")){
                 attrScreenPos2.add(attrPos2.get(i).getContent());
-            }else if(attrPos2.get(i).getContent().contains("pin")){
+            }else if(attrPos2.get(i).getContent().contains("pin") || attrPos2.get(i).getContent().contains("sạc")){
                 attrBattPos2.add(attrPos2.get(i).getContent());
             }else if(attrPos2.get(i).getContent().contains("dung lượng") || attrPos2.get(i).getContent().contains("bộ nhớ") 
                     || attrPos2.get(i).getContent().contains("dung luong") || attrPos2.get(i).getContent().contains("ram")){
@@ -361,7 +361,7 @@ public class ProductController {
             if(attrNeg1.get(i).getContent().contains("màn hình") || attrNeg1.get(i).getContent().contains("man hinh")
             || attrNeg1.get(i).getContent().contains("phân giải")){
                 attrScreenNeg1.add(attrNeg1.get(i).getContent());
-            }else if(attrNeg1.get(i).getContent().contains("pin")){
+            }else if(attrNeg1.get(i).getContent().contains("pin") || attrNeg1.get(i).getContent().contains("sạc")){
                 attrBattNeg1.add(attrNeg1.get(i).getContent());
             }else if(attrNeg1.get(i).getContent().contains("dung lượng") || attrNeg1.get(i).getContent().contains("bộ nhớ") 
                     || attrNeg1.get(i).getContent().contains("dung luong") || attrNeg1.get(i).getContent().contains("ram")){
@@ -378,7 +378,7 @@ public class ProductController {
             if(attrNeg2.get(i).getContent().contains("màn hình") || attrNeg2.get(i).getContent().contains("man hinh")
             || attrNeg2.get(i).getContent().contains("phân giải")){
                 attrScreenNeg2.add(attrNeg2.get(i).getContent());
-            }else if(attrNeg2.get(i).getContent().contains("pin")){
+            }else if(attrNeg2.get(i).getContent().contains("pin")  || attrNeg2.get(i).getContent().contains("sạc")){
                 attrBattNeg2.add(attrNeg2.get(i).getContent());
             }else if(attrNeg2.get(i).getContent().contains("dung lượng") || attrNeg2.get(i).getContent().contains("bộ nhớ") 
                     || attrNeg2.get(i).getContent().contains("dung luong") || attrNeg2.get(i).getContent().contains("ram")){
@@ -409,6 +409,7 @@ public class ProductController {
         
         model.addAttribute("attrScreenPos1", (attrScreenPos1.size() > 10)? attrScreenPos1.subList(0, 9) : attrScreenPos1);
         model.addAttribute("attrScreenPos2", (attrScreenPos2.size() > 10)? attrScreenPos2.subList(0, 9) : attrScreenPos2);
+
         model.addAttribute("attrBattPos1", (attrBattPos1.size() > 10)? attrBattPos1.subList(0, 9) : attrBattPos1);
         model.addAttribute("attrBattPos2", (attrBattPos2.size() > 10)? attrBattPos2.subList(0, 9) : attrBattPos2);
         model.addAttribute("attrEndPos1", (attrEndPos1.size() > 10)? attrEndPos1.subList(0, 9) : attrEndPos1);
@@ -429,15 +430,153 @@ public class ProductController {
         model.addAttribute("attrOtherNeg1", (attrOtherNeg1.size() > 10)? attrOtherNeg1.subList(0, 9) : attrOtherNeg1);
         model.addAttribute("attrOtherNeg2", (attrOtherNeg2.size() > 10)? attrOtherNeg2.subList(0, 9) : attrOtherNeg2);
 
+        int temp = 0;
+        ArrayList<Integer> screenNum1 = new ArrayList<>();
+        if(attrScreenPos1.size() + attrScreenNeg1.size() > 0){
+            temp = attrScreenPos1.size()*10/(attrScreenPos1.size() + attrScreenNeg1.size());
+            screenNum1.add(temp);
+            screenNum1.add(10 - temp);
+        }
+        else{
+            screenNum1.add(0);
+            screenNum1.add(0);
+        }
+        screenNum1.add(attrScreenPos1.size());
+        screenNum1.add(attrScreenNeg1.size());
 
+        temp = 0;
+        ArrayList<Integer> screenNum2 = new ArrayList<>();
+        if(attrScreenPos2.size() + attrScreenNeg2.size() > 0){
+            temp = attrScreenPos2.size()*10/(attrScreenPos2.size() + attrScreenNeg2.size());
+            screenNum2.add(temp);
+            screenNum2.add(10 - temp);
+        }
+        else{
+            screenNum2.add(0);
+            screenNum2.add(0);
+        }
+        screenNum2.add(attrScreenPos2.size());
+        screenNum2.add(attrScreenNeg2.size());
+
+        ArrayList<Integer> battNum1 = new ArrayList<>();
+        if(attrBattPos1.size() + attrBattNeg1.size() > 0){
+            temp = attrBattPos1.size()*10/(attrBattPos1.size() + attrBattNeg1.size());
+            battNum1.add(temp);
+            battNum1.add(10 - temp);
+        }
+        else{
+            battNum1.add(0);
+            battNum1.add(0);
+        }
+        battNum1.add(attrBattPos1.size());
+        battNum1.add(attrBattNeg1.size());
+
+        ArrayList<Integer> battNum2 = new ArrayList<>();
+        if(attrBattPos2.size() + attrBattNeg2.size() > 0){
+            temp = attrBattPos2.size()*10/(attrBattPos2.size() + attrBattNeg2.size());
+            battNum2.add(temp);
+            battNum1.add(10 - temp);
+        }
+        else{
+            battNum2.add(0);
+            battNum2.add(0);
+        }
+        battNum2.add(attrBattPos2.size());
+        battNum2.add(attrBattNeg2.size());
+
+        ArrayList<Integer> endNum1 = new ArrayList<>();
+        if(attrEndPos1.size() + attrEndNeg1.size() > 0){
+            temp = attrEndPos1.size()*10/(attrEndPos1.size() + attrEndNeg1.size());
+            endNum1.add(temp);
+            endNum1.add(10 - temp);
+        }
+        else{
+            endNum1.add(0);
+            endNum1.add(0);
+        }
+        endNum1.add(attrEndPos1.size());
+        endNum1.add(attrEndNeg1.size());
+
+        ArrayList<Integer> endNum2 = new ArrayList<>();
+        if(attrEndPos2.size() + attrEndNeg2.size() > 0){
+            temp = attrEndPos2.size()*10/(attrEndPos2.size() + attrEndNeg2.size());
+            endNum2.add(temp);
+            endNum2.add(10 - temp);
+        }
+        else{
+            endNum2.add(0);
+            endNum2.add(0);
+        }
+        endNum2.add(attrEndPos2.size());
+        endNum2.add(attrEndNeg2.size());
+
+        ArrayList<Integer> memNum1 = new ArrayList<>();
+        if(attrMemPos1.size() + attrMemNeg1.size() > 0){
+            temp = attrMemPos1.size()*10/(attrMemPos1.size() + attrMemNeg1.size());
+            memNum1.add(temp);
+            memNum1.add(10 - temp);
+        }
+        else{
+            memNum1.add(0);
+            memNum1.add(0);
+        }
+        memNum1.add(attrMemPos1.size());
+        memNum1.add(attrMemNeg1.size());
+
+        ArrayList<Integer> memNum2 = new ArrayList<>();
+        if(attrMemPos2.size() + attrMemNeg2.size() > 0){
+            temp = attrMemPos2.size()*10/(attrMemPos2.size() + attrMemNeg2.size());
+            memNum2.add(temp);
+            memNum2.add(10 - temp);
+        }
+        else{
+            memNum2.add(0);
+            memNum2.add(0);
+        }
+        memNum2.add(attrMemPos2.size());
+        memNum2.add(attrMemNeg2.size());
+
+        model.addAttribute("screenNum1", screenNum1);
+        model.addAttribute("screenNum2", screenNum2);
+        model.addAttribute("battNum1", battNum1);
+        model.addAttribute("battNum2", battNum2);
+        model.addAttribute("endNum1", endNum1);
+        model.addAttribute("endNum2", endNum2);
+        model.addAttribute("memNum1", memNum1);
+        model.addAttribute("memNum2", memNum2);
 
         return "compare";
+    }
+
+    @GetMapping("/product/category/{id}")
+    public String category(@PathVariable int id, Model model, HttpSession session) {
+
+        SubCategory sub = subCateRepo.findById(id);
+        ArrayList<Product> prdList = prdRepo.findProductsByCategory(id);
+        ArrayList<Integer> cmtList = new ArrayList<>();
+        for(int i = 0; i < prdList.size(); i++){
+            ArrayList<ProductImage> images = prdImgRepo.getImage(prdList.get(i).getId());
+            cmtList.add(cmtRepo.getCmtNumber(prdList.get(i).getId()));
+            prdList.get(i).setImages(images);
+        }
+        
+        System.out.print(prdList.size());
+        model.addAttribute("prdList", prdList);
+        model.addAttribute("cmtList", cmtList);
+        model.addAttribute("search", sub.getName());
+
+        model.addAttribute("page", "Product List");
+        model.addAttribute("title", "Sản phẩm thuộc " + sub.getName());
+
+        return "productlist";
     }
 
     @GetMapping("/admin/product")
     public String prdAdmin( @RequestParam(required = false, name="msg") String msg, Model model, HttpSession session) {
         if (session.getAttribute("account") == null) {
             return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
         }
 
         model.addAttribute("page", "Product");
@@ -466,6 +605,8 @@ public class ProductController {
     public String addPrdAdmin(Model model, HttpSession session){
         if (session.getAttribute("account") == null) {
             return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
         }
 
         model.addAttribute("page", "Product");
@@ -485,6 +626,8 @@ public class ProductController {
     public String addPrdAdminPost(@RequestParam("prd_images") List<MultipartFile> multipartFile, Product product, SubCategory subCate, Model model, HttpSession session) throws IOException{
         if (session.getAttribute("account") == null) {
             return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
         }
         try{
             int prdImgBaseID = prdImgRepo.getHighestID();
@@ -518,6 +661,8 @@ public class ProductController {
     public String addCmtAdmin(@PathVariable int id, Model model, HttpSession session){
         if (session.getAttribute("account") == null) {
             return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
         }
 
         model.addAttribute("page", "Product");
@@ -530,6 +675,8 @@ public class ProductController {
     public String addCmtAdminPOST(@RequestParam("src") int type, @RequestParam("prd_cmt") MultipartFile file, @PathVariable int id, Model model, HttpSession session) throws IOException{
         if (session.getAttribute("account") == null) {
             return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
         }
         int srcID = -99999;
         if(type == 2){
@@ -617,6 +764,8 @@ public class ProductController {
     public String commentAdmin(@RequestParam(required = false, name="msg") String msg, Model model, HttpSession session) throws JsonMappingException, JsonProcessingException {
         if (session.getAttribute("account") == null) {
             return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
         }
 
         model.addAttribute("page", "Comment");
@@ -677,4 +826,130 @@ public class ProductController {
         return "productlist";
     }
 
+    @GetMapping("/admin/delete_prd/{id}")
+    public String del_prd(@PathVariable int id, Model model, HttpSession session){
+        if (session.getAttribute("account") == null) {
+            return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
+        }
+
+        Product prd = prdRepo.findProduct(id);
+        prd.setId(id);
+        ArrayList<ProductImage> images = prdImgRepo.getImage(id);
+        for(int i = 0; i < images.size(); i++){
+            prdImgRepo.delete(images.get(i));
+        }
+        prdRepo.deletePrd(prd.getId());
+
+        return "redirect:/admin/product?msg=prdDeleted";
+    }
+
+    @GetMapping("/admin/update")
+    public String updateModel(Model model, HttpSession session) throws JsonMappingException, JsonProcessingException{
+        if (session.getAttribute("account") == null) {
+            return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
+        }
+        ArrayList<Comment> nontrained = cmtRepo.getNonTrainedCmt();
+        ArrayList<String> nontrainedpos = new ArrayList<>();
+        ArrayList<String> nontrainedneg = new ArrayList<>();
+
+        for(int i = 0; i < nontrained.size(); i++){
+            if(nontrained.get(i).getLabel() == 1){
+                nontrainedpos.add(nontrained.get(i).getContent());
+            }
+            if(nontrained.get(i).getLabel() == -1){
+                nontrainedneg.add(nontrained.get(i).getContent());
+            }
+        }
+        //CALL API SECTION
+        String apURL = "http://127.0.0.1:8000/api/update";
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        JSONObject commentObject = new JSONObject();
+
+        commentObject.put("newcmtpos", new JSONArray(nontrainedpos));
+        commentObject.put("newcmtneg", new JSONArray(nontrainedneg));
+
+        HttpEntity<String> request = 
+        new HttpEntity<String>(commentObject.toString(), headers);
+        
+        String cmtResultAsJsonStr = restTemplate.postForObject(apURL, request, String.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode root = objectMapper.readTree(cmtResultAsJsonStr);
+        String rs = root.get("stt").toString();
+        System.out.println(rs);
+
+        if(rs.contains("1")){
+            cmtRepo.updateNonTrained();
+            return "redirect:/admin/comment?msg=updated";
+        }else{
+            return "redirect:/admin/comment?msg=updatefail";
+        }
+
+    }
+
+    @GetMapping("/admin/delete_cmt/{id}")
+    public String del_cmt(@PathVariable int id, Model model, HttpSession session){
+        if (session.getAttribute("account") == null) {
+            return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
+        }
+        try{
+            ArrayList<Attribute> attr = attrRepo.getCmtAttr(id);
+            for(int i = 0; i < attr.size(); i++){
+                attrRepo.deleteAttr(attr.get(i).getId());
+            }
+            cmtRepo.deleteCmt(id);
+            return "redirect:/admin/comment?msg=cmtDeleted";
+        }catch(Exception e){
+            e.printStackTrace();
+            return "redirect:/admin/comment?msg=cmtDeleteError";
+        }
+    }
+
+    @GetMapping("/admin/edit_cmt/{id}")
+    public String editCmtAdmin(@PathVariable int id, Model model, HttpSession session){
+        if (session.getAttribute("account") == null) {
+            return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
+        }
+
+        Comment cmt = cmtRepo.getCmt(id);
+
+        model.addAttribute("page", "Comment");
+        model.addAttribute("title", "Sửa đánh giá");
+        model.addAttribute("cmt", cmt);
+
+        return "edit_cmt";
+    }
+
+    @PostMapping("/admin/edit_cmt/{id}")
+    public String editCmtAdminPOST(@RequestParam("label") int label, @PathVariable int id, Model model, HttpSession session){
+        if (session.getAttribute("account") == null) {
+            return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
+        }
+
+        Comment cmt = cmtRepo.getCmt(id);
+        cmt.setLabel(label);
+        try{
+            cmtRepo.save(cmt);
+            return "redirect:/admin/comment?edit=ok";
+        }catch(Exception e){
+            return "redirect:/admin/comment?edit=fail";
+        }
+
+
+    }
 }

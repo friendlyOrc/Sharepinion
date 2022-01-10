@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="head::head">
+
+<body>
+    <nav th:replace="general::nav">
+
+    </nav>
+	<div class="row">
+        <div th:replace="general::sidebar">
+
+        </div>
+        	
+        <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+            <div class="row">
+                <ol class="breadcrumb">
+                    <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+                    <li><a href="">Quản lý sản phẩm</a></li>
+                    <li class="active">Sửa nhãn đánh giá</li>
+                </ol>
+            </div><!--/.row-->
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Sửa nhãn đánh giá</h1>
+                </div>
+            </div><!--/.row-->
+            <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <table data-toolbar="#toolbar"data-toggle="table" class="table table-borderless">
+    
+                                <tbody>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td th:text="${cmt.id}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sản phẩm</td>
+                                        <td th:text="${cmt.product.name}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Người dùng</td>
+                                        <td th:text="${cmt.account.name}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nội dung</td>
+                                        <td th:text="${cmt.content}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nhãn</td>
+                                        <td>
+                                            <form role="form" method="post">
+                                                <div class="panel-body row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <select name="label" id="label" class="form-select">
+                                                                <option th:if="${cmt.label == 1}" value="1" selected>Tích cực</option>
+                                                                <option th:if="${cmt.label == -1}" value="1">Tích cực</option>
+                                                                <option th:if="${cmt.label == 1}" value="-1">Tiêu cực</option>
+                                                                <option th:if="${cmt.label == -1}" value="-1" selected>Tiêu cực</option>
+                                                            </select>
+                                                        </div>
+                                                        <button name="sbm" type="submit" class="btn btn-success">Sửa đánh giá sản phẩm</button>
+                                                        <button type="reset" class="btn btn-default">Làm mới</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div><!-- /.col-->
+                </div><!-- /.row -->
+            
+        </div>	<!--/.main-->	
+     
+        
+    </div>	
+	
+    <div th:replace="js::js">
+    </div>
+</body>
+
+</html>

@@ -2,9 +2,11 @@ package sharepinion.sharepinion.data;
 
 import java.util.ArrayList;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 // import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import sharepinion.sharepinion.model.Product;
 
@@ -30,4 +32,9 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     @Query(value = "SELECT id FROM `product` order by id DESC LIMIT 1", nativeQuery = true)
     int getHighestID();
+    
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM `product` WHERE id = ?1", nativeQuery = true)
+    void deletePrd(int id);
 }

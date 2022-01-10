@@ -111,5 +111,21 @@ public class ProfileController {
         return "profile";
     }
     
+    @GetMapping("/admin/user")
+    public String user(Model model, HttpSession session) {
+        if (session.getAttribute("account") == null) {
+            return "redirect:/admin/login";
+        }else if( ((Account) session.getAttribute("account")).getRole() == 0){
+            return "redirect:/";
+        }
 
+        model.addAttribute("page", "Member");
+        model.addAttribute("title", "Thông tin tài khoản");
+
+        ArrayList<Account> userAcc = accRepo.getAll();
+
+        model.addAttribute("userAcc", userAcc);
+
+        return "user_admin";
+    }
 }

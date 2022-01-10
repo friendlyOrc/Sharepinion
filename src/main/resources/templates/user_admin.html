@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="head::head">
+
+<body>
+    <nav th:replace="general::nav">
+
+    </nav>
+	<div class="row">
+        <div th:replace="general::sidebar">
+
+        </div>
+            
+        <script>
+            function delPrd(){
+                var confirmBox = confirm("Bạn chắc chứ?");
+                return confirmBox;
+            }
+        </script>
+            <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Danh sách người dùng</h1>
+                    </div>
+                </div>
+
+                <div id="toolbar" class="btn-group">
+                    <a href="/admin/add_product" class="btn btn-success">
+                        <i class="glyphicon glyphicon-plus"></i> Thêm người dùng
+                    </a>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <table data-toolbar="#toolbar"data-toggle="table" class="table table-border">
+        
+                                    <thead>
+                                    <tr>
+                                        <th data-field="id" data-sortable="true">ID</th>
+                                        <th>Tên</th>
+                                        <th data-field="name"  data-sortable="true">Email</th>
+                                        <th data-field="price" data-sortable="true">Quyền</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr th:each="user: ${userAcc}">
+                                            <td th:text="${user.id}"></td>
+                                            <td th:text="${user.name}"></td>
+                                            <td th:text="${user.email}"></td>
+
+                                            <td th:if="${user.role == 1}"  >
+                                                Admin
+                                            </td>
+                                            <td th:if="${user.role == 0}"  >
+                                                Khách hàng
+                                            </td>
+                                            <td class="form-group">
+                                                <a href="/admin/edit_product/" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                                <a onclick = "return delPrd();" href="/admin/delete_prd/" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="panel-footer text-center">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.row-->	
+            </div>	<!--/.main-->
+        
+        
+    </div>	
+	
+    <div th:replace="js::js">
+
+    </div>
+</body>
+
+</html>

@@ -25,12 +25,12 @@
             </a>
         </li> -->
         <li th:if="${page == 'Member'}" class="active" >
-            <a href="/members"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg>
+            <a href="/admin/user"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg>
                 Quản lý thành viên
             </a>
         </li>
         <li th:unless="${page == 'Member'}" >
-            <a href="/members"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg>
+            <a href="/admin/user"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg>
                 Quản lý thành viên
             </a>
         </li>

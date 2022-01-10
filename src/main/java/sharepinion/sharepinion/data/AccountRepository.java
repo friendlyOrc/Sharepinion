@@ -10,6 +10,9 @@ import sharepinion.sharepinion.model.Account;
 
 
 public interface AccountRepository extends CrudRepository<Account, Long> {
+    @Query(value = "SELECT * FROM `account`", nativeQuery = true)
+    ArrayList<Account> getAll();
+
     @Query(value = "SELECT * FROM `account` WHERE email = ?1 and password = ?2", nativeQuery = true)
     ArrayList<Account> findAccount(String un, String pw);
 

@@ -48,6 +48,12 @@ public class LoginController {
         session.removeAttribute("account");
         return "redirect:/";
     }
+    
+    @GetMapping("/admin/logout")
+    public String adminLogout(Model model, HttpSession session) {
+        session.removeAttribute("account");
+        return "redirect:/admin";
+    }
 
     @PostMapping("/login")
     public String postLogin(Account account, Model model, HttpSession session) {

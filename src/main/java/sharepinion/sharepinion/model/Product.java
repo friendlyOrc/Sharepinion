@@ -49,7 +49,7 @@ public class Product implements Serializable {
 
     private Time lastcmttime;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id")
     private List<ProductImage> images;
 

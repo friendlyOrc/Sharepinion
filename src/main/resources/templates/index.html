@@ -57,7 +57,8 @@
                     </div>
                     <ul class="list-group">
 
-                        <li class="list-group-item" th:each="sub: ${cate.subcategory}" th:text="${sub.name}">
+                        <li class="list-group-item" th:each="sub: ${cate.subcategory}" >
+                            <a th:href="'/product/category/' + ${sub.id}"th:text="${sub.name}"></a>
                             <!-- <span class="badge badge-pill badge-success pull-right">234</span> -->
                         </li>
                     </ul>
